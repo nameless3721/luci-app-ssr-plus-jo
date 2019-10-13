@@ -46,10 +46,7 @@ function o.cfgvalue(...)
 	return Value.cfgvalue(...) or translate("None")
 end
 
-o = s:option(DummyValue, "server", translate("Server Address"))
-function o.cfgvalue(...)
-	return Value.cfgvalue(...) or "?"
-end
+
 
 o = s:option(DummyValue, "encrypt_method", translate("Encrypt Method"))
 o.width="10%"
