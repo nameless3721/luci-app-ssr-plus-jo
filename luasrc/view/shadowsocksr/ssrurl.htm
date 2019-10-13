@@ -98,7 +98,7 @@
         var ssu = ssrurl.split('://');
         console.log(ssu.length);
         if ((ssu[0] != "ssr" && ssu[0] != "ss" && ssu[0] != "vmess") || ssu[1] == "") {
-            s.innerHTML = "<font color='red'>无效的格式</font>";
+            s.innerHTML = "<font color='red'>无效格式</font>";
             return false;
         }
 
@@ -197,8 +197,6 @@
 //]]></script>
 
 <input type="button" class="cbi-button cbi-button-apply" value="导入配置信息" onclick="return import_ssr_url(this, '<%=self.option%>', '<%=self.value%>')" />
-<input type="button" class="cbi-button cbi-button-apply" value="<%:Export SSR%>" onclick="return export_ssr_url(this,'<%=self.option%>','<%=self.value%>')" /><span id="<%=self.option%>-status"></span>
-
 <span id="<%=self.option%>-status"></span>
 
 <%+cbi/valuefooter%>
