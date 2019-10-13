@@ -46,17 +46,6 @@ function o.cfgvalue(...)
 	return Value.cfgvalue(...) or translate("None")
 end
 
-
-
-o = s:option(DummyValue, "encrypt_method", translate("Encrypt Method"))
-o.width="10%"
-
-
-o = s:option(DummyValue, "server_port", translate("Server Port"))
-function o.cfgvalue(...)
-	return Value.cfgvalue(...) or "?"
-end
-
 if nixio.fs.access("/usr/bin/kcptun-client") then
 
 o = s:option(Flag, "kcp_enable", translate("KcpTun"))
