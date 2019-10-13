@@ -529,9 +529,6 @@ msgstr "禁止  BT"
 msgid "BT Port"
 msgstr "BT 端口"
 
-msgid "Only Common Ports"
-msgstr "仅常用端口（不走P2P流量到代理）"
-
 
 msgid "Prohibit downloading tool ports through proxy"
 msgstr "禁止BT端口走代理"
@@ -703,3 +700,12 @@ msgstr "4 线程"
 
 msgid "8 Threads"
 msgstr "8 线程"
+
+msgid "Proxy Ports"
+msgstr "需要代理的端口"
+
+msgid "All Ports"
+msgstr "所有端口（默认）"
+
+msgid "Only Common Ports"
+msgstr "仅常用端口（不走P2P流量到代理）"
