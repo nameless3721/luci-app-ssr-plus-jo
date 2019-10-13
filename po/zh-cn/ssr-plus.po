@@ -74,7 +74,6 @@ msgstr "比重"
 msgid "Ping Latency"
 msgstr "Ping 延迟"
 
-
 msgid "Connection Timeout"
 msgstr "连接超时"
 
@@ -530,6 +529,8 @@ msgstr "禁止  BT"
 msgid "BT Port"
 msgstr "BT 端口"
 
+msgid "Only Common Ports"
+msgstr "仅常用端口（不走P2P流量到代理）"
 
 
 msgid "Prohibit downloading tool ports through proxy"
