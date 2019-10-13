@@ -2,7 +2,6 @@ local ucursor = require "luci.model.uci".cursor()
 local json = require "luci.jsonc"
 local server_section = arg[1]
 local proto = arg[2] 
-
 local local_port = arg[3]
 
 local server = ucursor:get_all("shadowsocksr", server_section)
@@ -60,7 +59,7 @@ local v2ray = {
                   type = server.kcp_guise
               }
           } or nil,
-             wsSettings = (server.transport == "ws") and {
+             wsSettings = (server.transport == "ws") and (server.ws_path ~= nil or server.ws_host ~= nil) and {
                 path = server.ws_path,
                 headers = (server.ws_host ~= nil) and {
                     Host = server.ws_host
