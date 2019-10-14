@@ -20,51 +20,29 @@ m:section(SimpleSection).template  = "shadowsocksr/status"
 s = m:section(TypedSection, "servers")
 s.anonymous = true
 s.addremove = true
-s.sortable = true
+s.sortable = false
 s.template = "cbi/tblsection"
-s.description = string.format(translate("Server Count") ..  ": %d", server_count)
-s.extedit = d.build_url("admin", "services", "shadowsocksr", "servers", "%s")
-
-function s.create(e, t)
-    local e = TypedSection.create(e, t)
-    luci.http.redirect(
-        d.build_url("admin", "services", "shadowsocksr", "servers", e))
+s.extedit = luci.dispatcher.build_url("admin/services/shadowsocksr/servers/%s")
+function s.create(...)
+	local sid = TypedSection.create(...)
+	if sid then
+		luci.http.redirect(s.extedit % sid)
+		return
+	end
 end
 
-function s.remove(t, a)
-    s.map.proceed = true
-    s.map:del(a)
-    luci.http.redirect(d.build_url("admin", "services", "shadowsocksr", "servers"))
-end
-o = s:option(DummyValue, "type", translate("Type"))
-function o.cfgvalue(...)
-	return Value.cfgvalue(...) or translate("")
-end
+
 
 o = s:option(DummyValue, "alias", translate("Alias"))
 function o.cfgvalue(...)
 	return Value.cfgvalue(...) or translate("None")
 end
 
-if nixio.fs.access("/usr/bin/kcptun-client") then
-
-o = s:option(Flag, "kcp_enable", translate("KcpTun"))
-function o.cfgvalue(...)
-	return Value.cfgvalue(...) or "?"
-end
-
-end
-
-o = s:option(DummyValue, "switch_enable", translate("Auto Switch"))
-function o.cfgvalue(...)
-	return Value.cfgvalue(...) or "0"
-end
 
 
 o = s:option(DummyValue,"server",translate("Ping Latency"))
 o.template="shadowsocksr/ping"
 o.width="10%"
-
 
 m:append(Template("shadowsocksr/server_list"))
 return m
