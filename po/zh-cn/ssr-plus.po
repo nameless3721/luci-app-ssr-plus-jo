@@ -684,7 +684,7 @@ msgid "Game Mode Host List"
 msgstr "增强游戏模式客户端LAN IP"
 
 msgid "Multi Threads Option"
-msgstr "多线程并发转发"
+msgstr "线程"
 
 msgid "Auto Threads"
 msgstr "自动（CPU线程数）"
