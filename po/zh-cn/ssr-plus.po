@@ -701,3 +701,9 @@ msgstr "4 线程"
 msgid "8 Threads"
 msgstr "8 线程"
 
+msgid "Black Domain List"
+msgstr "域名黑名单"
+
+msgid "Bypass Domain List"
+msgstr "域名白名单"
+
