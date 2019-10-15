@@ -92,18 +92,18 @@ if nixio.fs.access("/etc/china_ssr.txt") then
  ip_count = sys.exec("cat /etc/china_ssr.txt | wc -l")
 end
 
-local icount=sys.exec("ps -w | grep ssr-reudp |grep -v grep| wc -l")
+local icount=sys.exec("busybox ps -w | grep ssr-reudp |grep -v grep| wc -l")
 if tonumber(icount)>0 then
 reudp_run=1
 else
-icount=sys.exec("ps -w | grep ssr-retcp |grep \"\\-u\"|grep -v grep| wc -l")
+icount=sys.exec("busybox ps -w | grep ssr-retcp |grep \"\\-u\"|grep -v grep| wc -l")
 if tonumber(icount)>0 then
 reudp_run=1
 end
 end
 
 
-if luci.sys.call("ps -w | grep ssr-retcp | grep -v grep >/dev/null") == 0 then
+if luci.sys.call("busybox ps -w | grep ssr-retcp | grep -v grep >/dev/null") == 0 then
 redir_run=1
 end	
 
@@ -115,7 +115,7 @@ if luci.sys.call("pidof ss-local >/dev/null") == 0 then
 ssock5_run=1
 end
 
-if luci.sys.call("ps -w | grep v2-ssr-local | grep -v grep >/dev/null") == 0 then
+if luci.sys.call("busybox ps -w | grep v2-ssr-local | grep -v grep >/dev/null") == 0 then
 v2sock5_run=1
 end
 
@@ -135,11 +135,11 @@ if luci.sys.call("pidof ss-server >/dev/null") == 0 then
 sserver_run=1
 end
 
-if luci.sys.call("ps -w | grep v2ray-server | grep -v grep >/dev/null") == 0 then
+if luci.sys.call("busybox ps -w | grep v2ray-server | grep -v grep >/dev/null") == 0 then
 v2server_run=1
 end	
 
-if luci.sys.call("ps -w | grep ssr-tunnel |grep -v grep >/dev/null") == 0 then
+if luci.sys.call("busybox ps -w | grep ssr-tunnel |grep -v grep >/dev/null") == 0 then
 tunnel_run=1
 end
 
