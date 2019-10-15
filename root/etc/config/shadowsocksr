@@ -22,7 +22,7 @@ config socks5_proxy
 	option server 'nil'
 
 config global_haproxy
-	option admin_enable '1'
+	option admin_enable '0'
 	option admin_port '1111'
 	option admin_user 'admin'
 	option admin_password 'root'
@@ -63,7 +63,7 @@ config udp2raw
 	option seq_mode '3'
 	option auth_mode 'simple'
 	option bt '0'
-	option udp2raw_enable '1'
+	option udp2raw_enable '0'
 	option raw_mode 'udp'
 	option cipher_mode 'aes128cbc'
 	option server_port '600'
