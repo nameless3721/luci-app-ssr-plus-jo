@@ -231,7 +231,7 @@
 </fieldset>
 <!-- tblsection -->
 <fieldset class="cbi-section" id="cbi-<%=self.config%>-<%=self.sectiontype%>">
-    <button class="cbi-button  cbi-button-check ">检查所有节点</button><span class="panel-title">总计  <%- print(self.des)-%>个节点</span>   
+    </button><span class="panel-title">总计  <%- print(self.des)-%>个节点</span>   
     <div class="cbi-section-node">
         <%- local count = 0 -%>
         <div class="cbi-section-table pure-g">
@@ -257,7 +257,7 @@
 
                         </div>
                         
-                        <a class="cbi-button ssr-button " type="button" value="" onclick="apply_node('<%=section%>')" alt="应用" title="应用"><span class="icon-edit"></span> 应用</a>
+                        
                         <%- if self.extedit then -%>
                         <a class="cbi-button ssr-button " type="button" value=""
                            <%- if type(self.extedit) == "string" then
