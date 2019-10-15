@@ -21,6 +21,7 @@ s = m:section(TypedSection, "servers")
 s.anonymous = true
 s.addremove = true
 s.sortable = false
+s.des = server_count
 s.template = "shadowsocksr/tblsection"
 s.extedit = luci.dispatcher.build_url("admin/services/shadowsocksr/servers/%s")
 function s.create(...)
