@@ -46,43 +46,43 @@ end
 function act_status()
     local e={}
     --全局服务器
-    e.global=luci.sys.call("ps -w | grep ssr-retcp | grep -v grep >/dev/null") == 0  
+    e.global=luci.sys.call("busybox ps -w | grep ssr-retcp | grep -v grep >/dev/null") == 0  
    --检测PDNSD状态
-	if tonumber(luci.sys.exec("ps -w | grep pdnsd |grep -v grep| wc -l"))>0 then
+	if tonumber(luci.sys.exec("busybox ps -w | grep pdnsd |grep -v grep| wc -l"))>0 then
 		e.pdnsd= true
-	elseif tonumber(luci.sys.exec("ps -w | grep dnsparsing |grep -v grep| wc -l"))>0 then
+	elseif tonumber(luci.sys.exec("busybox ps -w | grep dnsparsing |grep -v grep| wc -l"))>0 then
 		e.pdnsd= true
-	elseif tonumber(luci.sys.exec("ps -w | grep dnscrypt-proxy |grep -v grep| wc -l"))>0 then
+	elseif tonumber(luci.sys.exec("busybox ps -w | grep dnscrypt-proxy |grep -v grep| wc -l"))>0 then
 		e.pdnsd= true
-              elseif tonumber(luci.sys.exec("ps -w | grep dns-forwarder |grep -v grep| wc -l"))>0 then
+              elseif tonumber(luci.sys.exec("busybox ps -w | grep dns-forwarder |grep -v grep| wc -l"))>0 then
 		e.pdnsd= true
-               elseif tonumber(luci.sys.exec("ps -w | grep dnsforwarder |grep -v grep| wc -l"))>0 then
+               elseif tonumber(luci.sys.exec("busybox ps -w | grep dnsforwarder |grep -v grep| wc -l"))>0 then
 		e.pdnsd= true
 
 
 	end
 	--检测UDP2RAW状态
-    if tonumber(luci.sys.exec("ps -w | grep udp2raw |grep -v grep| wc -l"))>0 then
+    if tonumber(luci.sys.exec("busybox ps -w | grep udp2raw |grep -v grep| wc -l"))>0 then
 		e.udp2raw= true  
 end
 --检测UDPspeeder状态
-    if tonumber(luci.sys.exec("ps -w | grep udpspeeder |grep -v grep| wc -l"))>0 then
+    if tonumber(luci.sys.exec("busybox ps -w | grep udpspeeder |grep -v grep| wc -l"))>0 then
 		e.udpspeeder= true  
 end
     --检测SOCKS5状态
-	if tonumber(luci.sys.exec("ps -w | grep ssr-local |grep -v grep| wc -l"))>0 then
+	if tonumber(luci.sys.exec("busybox ps -w | grep ssr-local |grep -v grep| wc -l"))>0 then
 		e.SOCKS5= true
-	elseif tonumber(luci.sys.exec("ps -w | grep ss-local |grep -v grep| wc -l"))>0 then
+	elseif tonumber(luci.sys.exec("busybox ps -w | grep ss-local |grep -v grep| wc -l"))>0 then
 		e.SOCKS5= true
-	elseif tonumber(luci.sys.exec("ps -w | grep v2-ssr-local |grep -v grep| wc -l"))>0 then
+	elseif tonumber(luci.sys.exec("busybox ps -w | grep v2-ssr-local |grep -v grep| wc -l"))>0 then
 		e.SOCKS5= true
 	end  
     -- 检测游戏模式状态
     e.game = false
-    if tonumber(luci.sys.exec("ps -w | grep ssr-reudp |grep -v grep| wc -l"))>0 then
+    if tonumber(luci.sys.exec("busybox ps -w | grep ssr-reudp |grep -v grep| wc -l"))>0 then
         e.game= true
     else
-        if tonumber(luci.sys.exec("ps -w | grep ssr-retcp |grep \"\\-u\"|grep -v grep| wc -l"))>0 then
+        if tonumber(luci.sys.exec("busybox ps -w | grep ssr-retcp |grep \"\\-u\"|grep -v grep| wc -l"))>0 then
             e.game= true
         end
     end
