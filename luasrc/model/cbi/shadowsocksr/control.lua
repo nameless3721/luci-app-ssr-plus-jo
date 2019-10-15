@@ -43,13 +43,7 @@ luci.ip.neighbors({ family = 4 }, function(entry)
 end)
 
 
-s = m:section(TypedSection, "domain_white_list", translate("Domain White List"))
-s.template = "cbi/tblsection"
-s.anonymous = true
-s.addremove = true
-s.sortable  = true
 
-o = s:option(Value, "domain_names", translate("Domain name (keyword only)"))
 
 -- Part of Self
 -- s:tab("self_ac", translate("Router Self AC"))
