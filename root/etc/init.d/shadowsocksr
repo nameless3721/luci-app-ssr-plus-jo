@@ -1050,11 +1050,11 @@ stop() {
 	iptables -t nat -X HAPROXY 2>/dev/null
 
 	if [ -z "$switch_server" ] ;then
-		kill -9 $(ps | grep ssr-switch | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1
+		kill -9 $(busybox ps -w | grep ssr-switch | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1
 	fi
 
 	if [ $(uci_get_by_type global monitor_enable) = 1 ] ;then
-		kill -9 $(ps | grep ssr-monitor | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1
+		kill -9 $(busybox ps -w | grep ssr-monitor | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1
 	fi
 
 	killall -q -9 ssr-monitor
@@ -1081,7 +1081,7 @@ stop() {
 		kill $(cat /var/run/pdnsd.pid) >/dev/null 2>&1
 	else
 
-	kill -9 $(ps | grep pdnsd | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1 
+	kill -9 $(busybox ps -w | grep pdnsd | grep -v "grep" | awk '{print $1}') >/dev/null 2>&1 
 	fi
 
 	kill $(pidof dnsparsing) >/dev/null 2>&1 || killall -9 dnsparsing >/dev/null 2>&1
