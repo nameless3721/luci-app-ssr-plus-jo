@@ -982,6 +982,8 @@ start() {
 		[ $HAPROXY_MODE = "1" ] && start_haproxy && haproxy_enable=1
 		
 		start_redir
+		
+		/usr/share/shadowsocksr/gfw2ipset.sh
   
 		mkdir -p /tmp/dnsmasq.d
 
