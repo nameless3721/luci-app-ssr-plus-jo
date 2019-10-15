@@ -1,6 +1,5 @@
 -- Copyright (C) 2018 jerrykuku <jerrykuku@qq.com>
 -- Licensed to the public under the GNU General Public License v3.
-
 module("luci.controller.shadowsocksr", package.seeall)
 
 function index()
@@ -13,64 +12,33 @@ function index()
         entry({"admin", "services", "shadowsocksr", "client"},cbi("shadowsocksr/client"),_("SSR Client"),10).leaf = true
         entry({"admin", "services", "shadowsocksr", "servers"}, cbi("shadowsocksr/servers"), _("Severs Nodes"), 11).leaf = true
         entry({"admin", "services", "shadowsocksr", "servers"},arcombine(cbi("shadowsocksr/servers"), cbi("shadowsocksr/client-config")),_("Severs Nodes"), 11).leaf = true
-        entry({"admin", "services", "shadowsocksr", "control"},cbi("shadowsocksr/control"),_("Access Control"),12).leaf = true
-        entry({"admin", "services", "shadowsocksr", "list"},cbi("shadowsocksr/list"),_("GFW List"),13).leaf = true
-        entry({"admin", "services", "shadowsocksr", "advanced"},cbi("shadowsocksr/advanced"), _("Advanced Settings"),14).leaf = true
+
+        entry({"admin", "services", "shadowsocksr", "subscription"},cbi("shadowsocksr/subscription"), _("Subscription Managenent"),12).leaf = true
+        entry({"admin", "services", "shadowsocksr", "control"},cbi("shadowsocksr/control"),_("Access Control"),13).leaf = true
+        entry({"admin", "services", "shadowsocksr", "list"},cbi("shadowsocksr/list"),_("GFW List"),14).leaf = true
+          
+        entry({"admin", "services", "shadowsocksr", "automatic"},cbi("shadowsocksr/automatic"), _("Automatic Switching"),18).leaf = true
+        entry({"admin", "services", "shadowsocksr", "advanced"},cbi("shadowsocksr/advanced"), _("Advanced Settings"),19).leaf = true
     elseif nixio.fs.access("/usr/bin/ssr-server") then
         entry({"admin", "services", "shadowsocksr"},alias("admin", "services", "shadowsocksr", "server"), _("ShadowSocksR"),10).dependent = true
     else
         return
     end
+    entry({"admin", "services", "shadowsocksr", "status"},form("shadowsocksr/status"),_("Status"), 20).leaf = true
 
     if nixio.fs.access("/usr/bin/ssr-server") then
-        entry({"admin", "services", "shadowsocksr", "server"},arcombine(cbi("shadowsocksr/server"), cbi("shadowsocksr/server-config")),_("SSR Server"),20).leaf = true
+        entry({"admin", "services", "shadowsocksr", "server"},arcombine(cbi("shadowsocksr/server"), cbi("shadowsocksr/server-config")),_("SSR Server"),21).leaf = true
     end
-
+   
     entry({"admin", "services", "shadowsocksr", "log"}, cbi("shadowsocksr/log"), _("Log"), 30).leaf = true
+
     entry({"admin", "services", "shadowsocksr", "refresh"}, call("refresh_data"))
     entry({"admin", "services", "shadowsocksr", "checkport"}, call("check_port"))
     entry({"admin", "services", "shadowsocksr", "checkports"}, call("check_ports"))
     entry({"admin", "services", "shadowsocksr", "run"}, call("act_status"))
     entry({"admin", "services", "shadowsocksr", "change"}, call("change_node"))
     entry({"admin", "services", "shadowsocksr", "allserver"}, call("get_servers"))
-	entry({"admin", "services", "shadowsocksr", "subscribe"}, call("get_subscribe"))
 end
-
--- 执行订阅
-function get_subscribe()
-
-	local cjson = require "cjson"
-    local e={}
-    local uci = luci.model.uci.cursor()
-    local auto_update = luci.http.formvalue("auto_update")
-    local auto_update_time = luci.http.formvalue("auto_update_time")
-    local proxy = luci.http.formvalue("proxy")
-    local subscribe_url = luci.http.formvalue("subscribe_url")
-	if  subscribe_url ~= "[]" then
-		local cmd1 = 'uci set shadowsocksr.@server_subscribe[0].auto_update="'..auto_update..'"'
-		local cmd2 = 'uci set shadowsocksr.@server_subscribe[0].auto_update_time="'..auto_update_time..'"'
-		local cmd3 = 'uci set shadowsocksr.@server_subscribe[0].proxy="'..proxy..'"'
-		luci.sys.call('uci delete shadowsocksr.@server_subscribe[0].subscribe_url ')
-		luci.sys.call(cmd1)
-		luci.sys.call(cmd2)
-		luci.sys.call(cmd3)
-		for k,v in ipairs(cjson.decode(subscribe_url)) do
-			luci.sys.call('uci add_list shadowsocksr.@server_subscribe[0].subscribe_url="'..v..'"')
-		end
-		luci.sys.call('uci commit shadowsocksr')
-		luci.sys.call("nohup /usr/share/shadowsocksr/subscribe.sh >/www/check_update.htm 2>/dev/null &")
-		e.error = 0;
-	else
-		e.error = 1;
-	end
-	
-    
-	
-    luci.http.prepare_content("application/json")
-    luci.http.write_json(e)
-	
-end
-
 
 -- 获取所有节点
 function get_servers()
@@ -106,7 +74,6 @@ end
 
 -- 检测全局服务器状态
 function act_status()
-	math.randomseed(os.time())
     local e={}
     --全局服务器
     e.global=luci.sys.call("busybox ps -w | grep ssr-retcp | grep -v grep >/dev/null") == 0  
@@ -314,5 +281,3 @@ function check_port()
 	luci.http.prepare_content("application/json")
 	luci.http.write_json({ ret=retstring })
 end
-
-
